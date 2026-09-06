@@ -1,0 +1,10 @@
+version = 1
+
+[project]
+name = "scratch"
+
+[[frames]]
+name = "scratch-notes-app"
+stack = "node"
+port = 3000
+replicas = 1

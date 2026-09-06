@@ -1,0 +1,447 @@
+/* ===========================================================
+   Scratch design tokens
+   One warm brown neutral scale (hue ~28, low saturation).
+   Dark mode reads the scale bottom-up, light mode top-down.
+   No component may hardcode a color: use the semantic tokens.
+   =========================================================== */
+
+:root {
+    /* Spacing scale */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 24px;
+    --sp-6: 32px;
+    --sp-7: 48px;
+    --sp-8: 64px;
+
+    /* Type scale: size + matched line-height + tracking per role */
+    --fs-xs: 12px;   --lh-xs: 1.5;   --ls-xs: 0.01em;    /* small / meta */
+    --fs-sm: 13px;   --lh-sm: 1.5;   --ls-sm: 0;         /* sidebar items */
+    --fs-md: 15px;   --lh-md: 1.65;  --ls-md: 0;         /* body */
+    --fs-lg: 17px;   --lh-lg: 1.5;   --ls-lg: 0;         /* h3 */
+    --fs-xl: 22px;   --lh-xl: 1.3;   --ls-xl: -0.005em;  /* h2 */
+    --fs-2xl: 28px;  --lh-2xl: 1.25; --ls-2xl: -0.01em;  /* h1 */
+    --fs-3xl: 40px;  --lh-3xl: 1.15; --ls-3xl: -0.015em; /* page title */
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+
+    --measure: 46rem;
+    --sidebar-w: 268px;
+    --icon-stroke: 1.5px;
+
+    /* ---- Typography -------------------------------------------------------
+       No webfont binaries are bundled: the app must work offline with zero
+       network requests, and a CDN link would break that. So the stacks below
+       are ordered as real pairings, not as a wish list. The named webfonts
+       stay first so they are picked up if a user has them installed locally,
+       and every stack after that is a deliberate, widely-installed choice:
+
+         display -> a literary old-style serif (Iowan on Apple, Palatino on
+                    Windows, Source Serif / Georgia elsewhere)
+         sans    -> the platform UI face (SF, Segoe UI Variable, Roboto)
+         mono    -> the platform code face (SF Mono, Cascadia, Menlo)
+
+       Metrics below are tuned for these fallbacks, not for the webfonts:
+       the old-style serifs run wider and larger on the body than Fraunces,
+       so display tracking is tightened and sizes are nudged in `.page-title`
+       and the heading rules. */
+    --font-sans: 'Inter Tight', Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, 'Segoe UI Variable Text', 'Segoe UI', Roboto, 'Helvetica Neue',
+        Arial, sans-serif;
+    --font-display: 'Fraunces', 'Iowan Old Style', 'Source Serif 4', 'Palatino Linotype',
+        Palatino, 'Book Antiqua', Georgia, 'Times New Roman', serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', 'Cascadia Code',
+        Menlo, Consolas, 'Liberation Mono', monospace;
+
+    --ease: cubic-bezier(0.2, 0, 0.2, 1);
+    --dur-fast: 120ms;
+    --dur: 180ms;
+    --dur-slow: 260ms;
+
+    /* ---- The warm brown neutral scale: 12 steps, espresso to paper ---- */
+    --brown-1: #100d0a;
+    --brown-2: #17130f;
+    --brown-3: #1f1915;
+    --brown-4: #27201a;
+    --brown-5: #322a22;
+    --brown-6: #40352c;
+    --brown-7: #55483c;
+    --brown-8: #6f5f50;
+    --brown-9: #8f7c6c;
+    --brown-10: #b4a08c;
+    --brown-11: #d8c8b4;
+    --brown-12: #f2ebe1;
+
+    /* Two accent stops drawn from the same warm family */
+    --tan-soft: #dcbb96;
+    --tan-deep: #6d5034;
+}
+
+/* ---------------- Dark mode: espresso ground, beige ink ---------------- */
+:root,
+[data-theme='dark'] {
+    color-scheme: dark;
+
+    --bg: var(--brown-1);
+    --surface: var(--brown-2);
+    --surface-raised: var(--brown-4);
+    --surface-sunken: var(--brown-2);
+
+    --border: #2a2219;
+    --border-strong: var(--brown-6);
+
+    --text: #ece2d5;
+    --text-muted: var(--brown-10);
+    --text-faint: var(--brown-9);
+
+    --accent: var(--tan-soft);
+    --accent-hover: #e8cdae;
+    --accent-fg: #1a140f;
+    --accent-soft: #2b2117;
+
+    --selection: #4a3a29;
+    --code-bg: #1a1511;
+
+    /* Derived aliases used across components */
+    --bg-sidebar: #0c0a08;
+    --bg-raised: var(--surface-raised);
+    --bg-sunken: var(--surface-sunken);
+    --hover: #1e1813;
+    --active: #2a221b;
+    --callout-bg: #1e1813;
+
+    --warning: var(--tan-soft);
+    --danger: #d09a86;
+    --danger-soft: #2c1e18;
+
+    --tooltip-bg: var(--brown-12);
+    --tooltip-fg: var(--brown-2);
+    --tooltip-hover: var(--brown-11);
+
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-2: 0 14px 38px rgba(0, 0, 0, 0.62), 0 2px 8px rgba(0, 0, 0, 0.45);
+    --shadow-3: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 48px rgba(0, 0, 0, 0.55);
+    --scrim: rgba(12, 9, 7, 0.62);
+}
+
+/* ---------------- Light mode: warm paper, brown ink ---------------- */
+[data-theme='light'] {
+    color-scheme: light;
+
+    --bg: #faf6ef;
+    --surface: #f4ede2;
+    --surface-raised: #fffcf7;
+    --surface-sunken: #f1e9dc;
+
+    --border: #e7dccc;
+    --border-strong: #d4c4ae;
+
+    --text: var(--brown-4);
+    --text-muted: var(--brown-7);
+    --text-faint: #7d6a5a;
+
+    --accent: var(--tan-deep);
+    --accent-hover: #553e28;
+    --accent-fg: #fdfaf5;
+    --accent-soft: #efe3d1;
+
+    --selection: #e6d5ba;
+    --code-bg: #f2e9db;
+
+    --bg-sidebar: #f4ede2;
+    --bg-raised: var(--surface-raised);
+    --bg-sunken: var(--surface-sunken);
+    --hover: #ede3d5;
+    --active: #e4d7c4;
+    --callout-bg: #f2e9db;
+
+    --warning: #8a6533;
+    --danger: #8f4a37;
+    --danger-soft: #f6e5df;
+
+    --tooltip-bg: var(--brown-3);
+    --tooltip-fg: var(--brown-12);
+    --tooltip-hover: var(--brown-6);
+
+    --shadow-1: 0 1px 2px rgba(46, 34, 22, 0.07), 0 1px 3px rgba(46, 34, 22, 0.06);
+    --shadow-2: 0 10px 30px rgba(46, 34, 22, 0.16), 0 2px 6px rgba(46, 34, 22, 0.08);
+    --shadow-3: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 20px 44px rgba(46, 34, 22, 0.18);
+    --scrim: rgba(46, 34, 22, 0.32);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-sans);
+    font-size: var(--fs-md);
+    line-height: 1.55;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-synthesis-weight: none;
+}
+
+::selection {
+    background: var(--selection);
+    color: var(--text);
+}
+
+h1, h2, h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--text);
+    /* Old-style serifs carry more optical weight than Fraunces at these
+       sizes, so headings sit on 600 rather than 700 and lean on tracking. */
+    font-variant-numeric: oldstyle-nums;
+}
+
+h1 { font-size: var(--fs-2xl); line-height: var(--lh-2xl); letter-spacing: var(--ls-2xl); }
+h2 { font-size: var(--fs-xl); line-height: var(--lh-xl); letter-spacing: var(--ls-xl); }
+h3 { font-family: var(--font-sans); font-size: var(--fs-lg); line-height: var(--lh-lg); letter-spacing: var(--ls-lg); }
+
+.page-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-3xl);
+    letter-spacing: var(--ls-3xl);
+    font-variant-numeric: oldstyle-nums;
+}
+
+/* The sans stack resolves to a platform UI face, which reads slightly wider
+   than Inter Tight. A hair of negative tracking on small UI text keeps the
+   sidebar and meta rows on the spec's rhythm. */
+.u-ui-sm {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-sm);
+    letter-spacing: -0.003em;
+}
+
+button {
+    font-family: inherit;
+}
+
+a {
+    color: var(--accent);
+    text-underline-offset: 2px;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* Warm scrollbars so nothing renders in the browser's default blue-grey */
+* {
+    scrollbar-color: var(--brown-8) transparent;
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--brown-8);
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Shared button primitives, used across components */
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.icon-btn:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+
+.icon-btn:active {
+    background: var(--active);
+}
+
+.icon-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+button.primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    min-height: 40px;
+    padding: 0 var(--sp-4);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: var(--accent-fg);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+button.primary:hover {
+    background: var(--accent-hover);
+}
+
+button.primary:active {
+    transform: translateY(1px);
+}
+
+button.primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+button.ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    min-height: 34px;
+    padding: 0 var(--sp-3);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface-raised);
+    color: var(--text);
+    font-size: var(--fs-sm);
+    cursor: pointer;
+    transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+button.ghost:hover {
+    background: var(--hover);
+    border-color: var(--brown-8);
+}
+
+button.ghost:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* Popover menu, shared */
+.menu {
+    position: absolute;
+    z-index: 50;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 232px;
+    padding: var(--sp-1);
+    background: var(--surface-raised);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-2);
+    animation: menu-in 140ms var(--ease);
+}
+
+@keyframes menu-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu button {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    width: 100%;
+    min-height: 34px;
+    padding: 0 var(--sp-2);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text);
+    font-size: var(--fs-sm);
+    text-align: left;
+    cursor: pointer;
+}
+
+.menu button:hover {
+    background: var(--hover);
+}
+
+.menu button.danger {
+    color: var(--danger);
+}
+
+.menu button.danger:hover {
+    background: var(--danger-soft);
+}
+
+.menu-sep {
+    height: 1px;
+    margin: var(--sp-1) 0;
+    background: var(--border);
+}
+
+.only-mobile {
+    display: none;
+}
+
+@media (max-width: 860px) {
+    .only-mobile {
+        display: inline-flex;
+    }
+    .only-desktop {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

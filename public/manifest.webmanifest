@@ -1,0 +1,17 @@
+{
+    "name": "Scratch",
+    "short_name": "Scratch",
+    "description": "A local-first notes workspace. Everything you write stays on this device.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#100d0a",
+    "theme_color": "#100d0a",
+    "icons": [
+        {
+            "src": "/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}
